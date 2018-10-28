@@ -1,4 +1,57 @@
-## Welcome to GitHub Pages
+# Coding
+
+## Hosting Images on S3 using Symfony
+
+In this example, the bucket name is 'your-bucket-name', and the files are stored under the 'uploads' folder.
+
+### Create an S3 bucket
+
+Create an S3 bucket and add the following policy:
+```
+{
+    "Version": "2008-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowPublicRead",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::your-bucket-name/uploads/*"
+        }
+    ]
+}
+```
+
+This policy allows public read of the files under uploads, so that they can be displayed on the website.
+
+### Create an IAM user
+
+Go to aws and create an IAM user. copy the key and secret and set it to your .env
+Allow S3 read and write access to the S3 bucket by adding the following custom policy:
+```
+{
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:ListAllMyBuckets",
+      "Resource": "arn:aws:s3:::*"
+    },
+    {
+      "Action": "s3:*",
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::your-bucket-name",
+        "arn:aws:s3:::your-bucket-name/*"
+      ]
+    }
+  ]
+}
+```
+
+
+
 
 You can use the [editor on GitHub](https://github.com/maalls/coding/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
